@@ -1,0 +1,302 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/background.png');
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+/* Basic styles for navigation bar */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensure space between items */
+    flex-wrap: nowrap; /* Prevent wrapping of items */
+  }
+  
+  nav ul li {
+    margin: 0 10px; /* Adjust horizontal spacing between items */
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+  
+  /* Style for Sign Up and Log In buttons */
+  nav ul li a.btn {
+    background-color: #007BFF; /* Adjust color as needed */
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  nav ul li a.btn:hover {
+    background-color: #0056b3; /* Adjust hover color */
+  }
+  
+  /* Hide the menu initially on small screens */
+  .nav-menu {
+    display: flex; /* Ensure display as flex container */
+    width: 100%;
+  }
+  
+  /* Style for Menu Toggle Button on small screens */
+  .menu-toggle {
+    display: none;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  /* Styles for larger screens */
+  @media (min-width: 768px) {
+    .menu-toggle {
+      display: none;
+    }
+    .nav-menu {
+      display: flex;
+      justify-content: flex-start; /* Align items to the start of the container */
+      align-items: center; /* Align items vertically centered */
+    }
+  }
+  
+  /* Styles for smaller screens */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+    .nav-menu {
+      display: none; /* Hide menu by default */
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-menu.show {
+      display: flex; /* Show menu when toggle button is clicked */
+    }
+  }
+/* Add to your existing CSS file */
+
+/* Container for animated buttons */
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Space between buttons */
+  }
+  
+  /* Basic style for animated buttons */
+  .animated-button {
+    display: inline-block;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007BFF;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  }
+  
+  /* Hover effect */
+  .animated-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Apply animation to buttons */
+  .animated-button {
+    animation: fadeIn 1s ease-out;
+  }
+    
+ 
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #08090A;
+}
+
+
+
+.hero h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.hero p {
+    font-size: 1.5em;
+}
+
+section {
+    padding: 50px 0;
+}
+
+#3d-container {
+    width: 100%;
+    height: 400px;
+}
+
+#interactive {
+    padding: 50px 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+footer {
+    padding: 20px 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    #3d-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.5em;
+    }
+
+    .hero p {
+        font-size: 1em;
+    }
+
+    #3d-container {
+        height: 200px;
+    }
+}
+/* Navigation Bar Styles */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+   
+  }
+  
+  nav ul li {
+    display: inline;
+  }
+  
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: block;
+  }
+  
+  nav ul li a:hover {
+    background-color: #575757;
+  }
+  
+  /* Two Columns Section Styles */
+  .two-columns {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .column {
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .text-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .image-column img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Ensure the two-columns section uses flexbox for layout */
+.two-columns {
+    display: flex;
+    align-items: stretch; /* Ensure columns stretch to the full height */
+    justify-content: space-between;
+    gap: 20px; /* Add spacing between columns if needed */
+  }
+  
+  /* Style for columns */
+  .column {
+    flex: 1;
+    overflow: hidden; /* Hide any overflow content */
+    padding: 20px;
+  }
+  
+  /* Style for text-column */
+  .text-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Style for image-column */
+  .image-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-column img {
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any extra space below the image */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .two-columns {
+      flex-direction: column;
+    }
+  }
+  

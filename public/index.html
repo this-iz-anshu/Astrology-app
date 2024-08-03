@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astrology App</title>
+  <link rel="stylesheet" href="./src/assets/styles/main.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="opening hide-UI view-2D zoom-large data-close controls-close">
+  <header>
+    <!-- Navigation Bar -->
+    <nav>
+      <button class="menu-toggle" aria-controls="primary-navigation">Menu</button>
+      <ul class="nav-menu" id="primary-navigation">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Complete Chart</a></li>
+        <li><a href="#">Kundli Generation</a></li>
+        <li><a href="#">Daily Horoscope</a></li>
+        <li><a href="#">General Questions</a></li>
+        <li><a href="#">Advice Based on Charts</a></li>
+        <li><a href="#">Job Selection</a></li>
+        <li><a href="#">Lal Kitab Uppay</a></li>
+        <li><a href="#">Conflicts Resolution</a></li>
+        <li><a href="#" class="btn">Sign Up</a></li>
+        <li><a href="#" class="btn">Log In</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <!-- Two Columns Section -->
+    <section class="two-columns">
+      <div class="column text-column">
+        <h1>Explore the Stars</h1>
+        <p>Discover your future with our astrology app</p>
+        <div class="buttons-container">
+          <a href="#" class="animated-button">Personalised Astrology</a>
+          <a href="./Views/userInputForm.html" class="animated-button">Daily Prediction</a>
+        </div>
+      </div>
+      <div class="column image-column">
+        <img src="../src/assets/images/Durgag.png" alt="Astrology Image">
+      </div>
+    </section>
+    
+    <section class="interactive">
+      <h2>Interactive Features</h2>
+      <div class="button">Learn About Your Sign</div>
+    </section>     
+  </main>
+
+  <script>
+    // JavaScript to toggle the menu
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      var menu = document.querySelector('.nav-menu');
+      menu.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>
