@@ -1,5 +1,6 @@
 const { saveKundliData, getKundliDataById } = require('../services/kundliService');
 const { fetchEphemerisData, calculateKundli } = require('../services/ephemerisService');
+const planetIds = ['199', '299', '399'];
 
 function calculateJulianDate(dob, time) {
   const date = new Date(`${dob}T${time}`);
@@ -12,9 +13,9 @@ exports.generateKundli = async (req, res) => {
 
   try {
     const julianDate = calculateJulianDate(dob, time);
-    const ephemerisData = await fetchEphemerisData(julianDate);
+    const ephemerisData = await fetchEphemerisData(julianDate, planetIds);
     const kundliDetails = calculateKundli(ephemerisData, place);
-
+console.log(kundliDetails)
     const kundliId = saveKundliData({ name, kundliDetails });
     const resultUrl = `/kundli/result/${kundliId}`;
     res.json({ redirectUrl: resultUrl });

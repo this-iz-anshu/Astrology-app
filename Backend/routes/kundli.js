@@ -3,7 +3,6 @@ const { fetchEphemerisData, calculateKundli } = require('../services/ephemerisSe
 
 function calculateJulianDate(dob, time) {
   // Implement the logic to calculate Julian Date from dob and time
-  // This is a placeholder implementation
   const date = new Date(`${dob}T${time}`);
   const julianDate = date.getTime() / 86400000 + 2440587.5;
   return julianDate;
@@ -38,7 +37,6 @@ exports.showKundliResult = (req, res) => {
     res.status(404).send('Kundli not found');
   }
 };
-
 
 const express = require('express');
 const router = express.Router();

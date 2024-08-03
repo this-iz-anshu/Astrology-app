@@ -1,58 +1,82 @@
 const axios = require('axios');
 
-async function fetchEphemerisData(julianDate) {
+async function fetchEphemerisData(julianDate, planetIds) {
   try {
-    // Convert Julian date to the required format
-    const startDate = new Date((julianDate - 2440587.5) * 86400000).toISOString().split('T')[0];
-    const url = `https://ssd.jpl.nasa.gov/horizons_batch.cgi?batch=1&COMMAND='499'&CENTER='500@399'&START_TIME='${startDate}'&STOP_TIME='${startDate}'&STEP_SIZE='1 d'&QUANTITIES='1,9'&CSV_FORMAT='YES'`;
-    const response = await axios.get(url);
-
-    if (response.status === 200) {
-      console.log('Raw Data:', response.data); // Log the raw data
-      return parseEphemerisData(response.data);
-    } else {
-      throw new Error(`Error fetching data: ${response.status}`);
+    if (!Array.isArray(planetIds) || planetIds.length === 0) {
+      throw new Error('Invalid planetIds array');
     }
+
+    const startDate = new Date((julianDate - 2440587.5) * 86400000).toISOString().split('T')[0];
+    console.log('Fetching data for Julian Date:', julianDate);
+    console.log('Planet IDs:', planetIds);
+
+    // Fetch data for all specified planet IDs
+    const requests = planetIds.map(planetId => {
+      const url = `https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND='${planetId}'&OBJ_DATA='YES'&MAKE_EPHEM='YES'&EPHEM_TYPE='VECTORS'&CENTER='500@10'&START_TIME='${startDate}'&STOP_TIME='${startDate}'&STEP_SIZE='1%20d'`;
+      console.log('Request URL:', url);
+      return axios.get(url).then(response => parseEphemerisData(response.data, planetId));
+    });
+
+    // Await all requests
+    const results = await Promise.all(requests);
+    
+    // Combine results into a single array
+    const combinedResults = results.flat();
+    console.log('Combined Results:', combinedResults);
+    return combinedResults;
+
   } catch (error) {
     console.error('Failed to fetch ephemeris data:', error);
     throw error;
   }
 }
 
-function parseEphemerisData(data) {
-  const lines = data.split('\n');
-  const startLineIndex = lines.findIndex(line => line.includes('$$SOE'));
-  const endLineIndex = lines.findIndex(line => line.includes('$$EOE'));
+function parseEphemerisData(data, planetId) {
+  console.log(`Parsing data for planet ID ${planetId}`);
+  const lines = data.split('\n').map(line => line.trim());
 
-  if (startLineIndex === -1 || endLineIndex === -1) {
+  const startIndex = lines.indexOf('$$SOE');
+  const endIndex = lines.indexOf('$$EOE');
+
+  if (startIndex === -1 || endIndex === -1) {
     throw new Error('Ephemeris data markers not found in data');
   }
 
-  const headerLine = lines[startLineIndex + 1];
-  const dataLines = lines.slice(startLineIndex + 2, endLineIndex).filter(line => line.trim() !== '');
+  const dataLines = lines.slice(startIndex + 1, endIndex).filter(line => line);
 
-  const records = parse([headerLine, ...dataLines].join('\n'), {
-    columns: true,
-    skip_empty_lines: true
-  });
+  console.log('Data Lines:', dataLines);
 
-  const planetaryPositions = records.map(record => ({
-    date: record['Date (UT)'],
-    planet: record['Target body'],
-    position: {
-      x: parseFloat(record['X (AU)']),
-      y: parseFloat(record['Y (AU)']),
-      z: parseFloat(record['Z (AU)'])
+  const records = dataLines.map(line => {
+    const columns = line.split(/\s{2,}/);
+
+    if (columns.length < 7) {
+      console.warn('Skipping line with insufficient columns:', line);
+      return null;
     }
-  }));
 
-  return planetaryPositions;
+    const [date, x, y, z, vx, vy, vz] = columns;
+
+    return {
+      planetId,
+      date: date.trim(),
+      x: parseFloat(x.trim()),
+      y: parseFloat(y.trim()),
+      z: parseFloat(z.trim()),
+      vx: parseFloat(vx.trim()),
+      vy: parseFloat(vy.trim()),
+      vz: parseFloat(vz.trim())
+    };
+  }).filter(record => record !== null);
+
+  console.log('Parsed Records:', records);
+  return records;
 }
 
-function calculateKundli(ephemerisData, place) {
+function calculateKundli(records, place) {
+  console.log('Calculating Kundli with records:', records);
   return {
     kundli: 'Kundli Data Here',
-    planetaryPositions: ephemerisData,
+    planetaryPositions: records,
     lagnaChart: 'Lagna Chart Data Here'
   };
 }
